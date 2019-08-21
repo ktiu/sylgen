@@ -1,0 +1,2 @@
+# sylgen
+Syllabus generator
