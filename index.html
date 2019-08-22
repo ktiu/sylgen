@@ -133,6 +133,7 @@
       event.preventDefault();
       var syllabusData = $(this).serializeJSON();
       syllabusData.days = getDaysForTerm(syllabusData.term, syllabusData.weekdays);
+      syllabusData.hasModule = syllabusData.module != "";
       console.log(syllabusData);
       generate("syllabus_template.docx", syllabusData);
     });
