@@ -22,6 +22,7 @@ function daysInRange(startDateString, endDateString) {
 }
 
 function getDaysForTerm(termName, weekdays) {
+  if(!weekdays) return [];
   var dayInts = weekdays.map(parseInt);
   term = terms.filter(t => t.name === termName)[0];
   var days = daysInRange(term.start, term.end);
