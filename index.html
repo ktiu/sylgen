@@ -21,48 +21,48 @@
         <div class="card border border-primary">
           <div class="card-header"><legend class="mb-0">Termine</legend></div>
           <div class="card-body">
-          <div class="form-group row">
-            <label for="term" class="col-sm-3 col-form-label">Semester:</label>
-            <div class="col-sm-9">
-              <select name="term" id="term" class="form-control">
+            <div class="form-group row">
+              <label for="term" class="col-sm-3 col-form-label">Semester:</label>
+              <div class="col-sm-9">
+                <select name="term" id="term" class="form-control">
                 <option selected value="Wintersemester 2019/20">Wintersemester 2019/20</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Wochentage:</label><br/>
-            <div class="col-sm-3">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="weekdays[]" id="monday" value=1>
-                <label class="form-check-label" for="monday">Montag</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="weekdays[]"  id="tuesday" value=2>
-                <label class="form-check-label" for="tuesday">Dienstag</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="weekdays[]" id="wendnesday" value=3>
-                <label class="form-check-label" for="wendnesday">Mittwoch</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="weekdays[]" id="thursday" value=4>
-                <label class="form-check-label" for="thursday">Donnerstag</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="weekdays[]" id="friday" value=5>
-                <label class="form-check-label" for="friday">Freitag</label>
+                </select>
               </div>
             </div>
-            <small class="col-sm-6 text-muted">
-              Mit diesen Angaben werden die Veranstaltungstermine automatisch generiert und in den Syllabus eingefügt. Zugrunde liegen die <a href="https://www.uni-frankfurt.de/58757965/Kommende_Semester">Semestertermine der Goethe Universität Frankfurt</a> sowie <a href="https://innen.hessen.de/buerger-staat/gesetzliche-feiertage"> die gesetzlichen Feiertage in Hessen.</a>
-            </small>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Wochentage:</label><br/>
+              <div class="col-sm-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="monday" value=1>
+                  <label class="form-check-label" for="monday">Montag</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="weekdays[]"  id="tuesday" value=2>
+                  <label class="form-check-label" for="tuesday">Dienstag</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="wendnesday" value=3>
+                  <label class="form-check-label" for="wendnesday">Mittwoch</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="thursday" value=4>
+                  <label class="form-check-label" for="thursday">Donnerstag</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="friday" value=5>
+                  <label class="form-check-label" for="friday">Freitag</label>
+                </div>
+              </div>
+              <small class="col-sm-6 text-muted">
+                Mit diesen Angaben werden die Veranstaltungstermine automatisch generiert und in den Syllabus eingefügt. Zugrunde liegen die <a href="https://www.uni-frankfurt.de/58757965/Kommende_Semester">Semestertermine der Goethe Universität Frankfurt</a> sowie <a href="https://innen.hessen.de/buerger-staat/gesetzliche-feiertage"> die gesetzlichen Feiertage in Hessen.</a>
+              </small>
             </div>
           </div>
         </div>
         <div class="card mt-4">
           <div class="card-header area-toggle" id="courseHeader" aria-controls="courseDetails" aria-expanded="false">
             <legend class="mb-0">
-              <i class="far fa-plus-square mr-2" id="expandCourse"></i>
+              <i class="far fa-plus-square mr-2"></i>
               Angaben zur Veranstaltung
             </legend>
           </div>
@@ -86,7 +86,7 @@
         <div class="card mt-4">
           <div class="card-header area-toggle" id="teacherHeader">
             <legend class="mb-0" aria-expanded="false" aria-controls="teacherDetails">
-              <i class="far fa-plus-square mr-2" id="expandCourse"></i>
+              <i class="far fa-plus-square mr-2"></i>
               Angaben zur Dozent*in
             </legend>
           </div>
@@ -101,6 +101,25 @@
             </div>
             <div class="form-group">
               <input type="text" name="website" class="form-control" id="website" placeholder="Webseite">
+            </div>
+          </div>
+        </div>
+        <div class="card mt-4">
+          <div class="card-header area-toggle" id="advancedHeader">
+            <legend class="mb-0" aria-expanded="false" aria-controls="advancedDetails">
+              <i class="far fa-plus-square mr-2"></i>
+              Erweiterte Einstellungen
+            </legend>
+          </div>
+          <div id="advancedDetails" class="collapse card-body" aria-labelledby="advancedHeader"> 
+            <div class="form-group row">
+              <label class="col-sm-6 col-form-label">Welche Abschnitte sollen ausgegeben werden?</label><br/>
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="showContents" id="contents" value="true">
+                  <label class="form-check-label" for="monday">Inhalte des Kurses</label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
