@@ -40,7 +40,7 @@ function setDepartmentDefaults() {
     var activeDepartment = departments[($("#presetSelect").children("option:selected").val())];
     defaults=activeDepartment.defaults;
     for (var dk in activeDepartment.defaults) {
-      $("#" + dk).val(activeDepartment.defaults[dk]);
+     if($("#" + dk).val() == "")  $("#" + dk).val(activeDepartment.defaults[dk]);
     }
   } else {
     defaults = {};
