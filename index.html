@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link href="fontawesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
@@ -18,7 +18,7 @@
       <p class="mt-4">Die hier eingegebenen Daten werden nur zur Generierung des Syllabus verwendet. Sie werden weder serverseitig gespeichert noch an Dritte weitergegeben.</p>
       <p>Alle Angaben sind optional.</p>
       <form class="mt-4" id="syllabusForm">
-        <div class="card border border-primary">
+        <div class="card border border-primary mb-4">
           <div class="card-header"><legend class="mb-0">Termine</legend></div>
           <div class="card-body">
             <div class="form-group row">
@@ -59,12 +59,29 @@
             </div>
           </div>
         </div>
+            <div class="form-group row">
+              <div class="col-sm-1">
+                <input type="radio" name="departmentType" value="custom" checked>
+              </div>
+              <div class="col-sm-11">
+                <textarea class="form-control" name="customAffiliation" placeholder="Institut
+Fachbereich"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-1">
+                <input type="radio" id="presetRadio" name="departmentType" value="preset">
+              </div>
+              <div class="col-sm-11">
+                <select class="form-control" id="presetSelect" name="presetAffiliation">
+                  <!-- formControl.js populates this from departments.json //-->
+                </select>
+              </div>
+            </div>
         <div class="card mt-4">
           <div class="card-header area-toggle" id="courseHeader" aria-controls="courseDetails" aria-expanded="false">
-            <legend class="mb-0">
-              <i class="far fa-plus-square mr-2"></i>
-              Angaben zur Veranstaltung
-            </legend>
+            <i class="far fa-plus-square mr-2"></i>
+            Angaben zur Veranstaltung
           </div>
           <div id="courseDetails" class="collapse card-body" aria-labelledby="courseHeader"> 
             <div class="form-group">
@@ -83,12 +100,10 @@
             </div>
           </div>
         </div>
-        <div class="card mt-4">
-          <div class="card-header area-toggle" id="teacherHeader">
-            <legend class="mb-0" aria-expanded="false" aria-controls="teacherDetails">
-              <i class="far fa-plus-square mr-2"></i>
-              Angaben zur Dozent*in
-            </legend>
+        <div class="card">
+          <div class="card-header area-toggle" id="teacherHeader" aria-expanded="false" aria-controls="teacherDetails">
+            <i class="far fa-plus-square mr-2"></i>
+            Angaben zur Dozent*in
           </div>
           <div id="teacherDetails" class="collapse card-body" aria-labelledby="teacherHeader"> 
             <div class="row form-group">
@@ -104,21 +119,16 @@
             </div>
           </div>
         </div>
-        <div class="card mt-4">
-          <div class="card-header area-toggle" id="advancedHeader">
-            <legend class="mb-0" aria-expanded="false" aria-controls="advancedDetails">
-              <i class="far fa-plus-square mr-2"></i>
-              Erweiterte Einstellungen
-            </legend>
+        <div class="card">
+          <div class="card-header area-toggle" id="advancedHeader" aria-expanded="false" aria-controls="advancedDetails">
+            <i class="far fa-plus-square mr-2"></i>
+            Erweiterte Einstellungen
           </div>
           <div id="advancedDetails" class="collapse card-body" aria-labelledby="advancedHeader"> 
-            <div class="form-group row">
-              <label class="col-sm-6 col-form-label">Welche Abschnitte sollen ausgegeben werden?</label><br/>
-              <div class="col-sm-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="showContents" id="contents" value="true">
-                  <label class="form-check-label" for="monday">Inhalte des Kurses</label>
-                </div>
+            <div class="form-group">
+              <label>Welche Abschnitte sollen ausgegeben werden?</label>
+              <div id="chooseSections">
+              <!--- formControl.js populates this //-->
               </div>
             </div>
           </div>
@@ -145,20 +155,5 @@
   <script src="js/jquery.serializejson.js"></script>
   <script src="js/termDates.js"></script>
   <script src="js/generate.js"></script>
-  <script>
-    $("#syllabusForm").on( "submit", event => {
-      event.preventDefault();
-      var sd = $("#syllabusForm").serializeJSON();
-      sd.days = getDaysForTerm(sd.term, sd.weekdays);
-      sd.hasModule = sd.module != "";
-      sd.hasRoom = sd.room != "";
-      sd.hasTime = sd.time != "";
-      sd.hasInfo = sd.time || sd.room;
-      generate("syllabus_template.docx", sd);
-    });
-    $(".area-toggle").click( function() {
-      $(this).siblings(".collapse").collapse("toggle");
-      $(this).find("i").toggleClass("fa-plus-square").toggleClass("fa-minus-square");
-    });
-  </script>
+  <script src="js/formControl.js"></script>
 </html>

@@ -2,11 +2,12 @@ function loadFile(url,callback){
   PizZipUtils.getBinaryContent(url,callback);
 }
 function generate(syllabusTemplate, syllabusData) {
-  event.preventDefault();
+  console.log(syllabusData);
   loadFile(syllabusTemplate, function(error,content){
       if (error) { throw error };
       var zip = new PizZip(content);
       var doc=new window.docxtemplater().loadZip(zip)
+      doc.setOptions({linebreaks: true})
       doc.setData(syllabusData);
       try {
           doc.render()

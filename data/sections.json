@@ -1,0 +1,41 @@
+[{
+	"title": "Inhalte",
+	"id": "contents",
+	"flag": "showContents",
+	"default": true
+}, {
+	"title": "Lernziele",
+	"id": "goals",
+"flag": "showGoals",
+	"default": true
+}, {
+	"title": "Online-Materialien",
+	"id": "link",
+	"flag": "showLink",
+	"default": true
+}, {
+	"title": "Teilnahme- und Leistungsanforderungen",
+	"id": "requirements",
+	"flag": "showRequirements",
+	"default": true
+}, {
+	"title": "Abgabefristen",
+	"id": "deadlines",
+	"flag": "showDeadlines",
+	"default": true
+}, {
+	"title": "Ressourcen für wissenschaftliches Arbeiten",
+	"id": "resources",
+	"flag": "showResources",
+	"default": true
+}, {
+	"title": "Anwesenheitsregelung",
+	"id": "attendance",
+	"flag": "showAttendance",
+	"default": true
+}, {
+	"title": "Sitzungen",
+	"id": "session",
+	"flag": "showSessions",
+	"default": true
+}]
