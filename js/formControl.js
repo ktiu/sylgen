@@ -8,7 +8,7 @@ function populateSections(sections) {
           )
         ).append(
           $('<div class="col-sm-11">').append(
-            $('<label class="form-check-label" for=' + s.flag + '">').text(s.title)
+            $('<label class="form-check-label" for="' + s.flag + '">').text(s.title)
           ).append(
             $('<textarea rows="1" class="form-control" name="' + s.id + '" id="' + s.id + '">')
           )
