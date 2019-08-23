@@ -3,9 +3,11 @@
   <head>
     <title>Syllabus-Generator</title>
     <meta charset="UTF-8">
+    <link href="fontawesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
       @media (min-width: 768px) { .container{ max-width: 700px }
     </style>
@@ -13,21 +15,22 @@
   <body>
     <div class="container">
       <h1 class="mt-5">Syllabus-Generator</h1>
-      <p class="mt-4">Die hier eingegebenen Daten werden nur zur Generierung des Syllabus verwendet und nirgends gespeichert.</p>
+      <p class="mt-4">Die hier eingegebenen Daten werden nur zur Generierung des Syllabus verwendet. Sie werden weder serverseitig gespeichert noch an Dritte weitergegeben.</p>
       <p>Alle Angaben sind optional.</p>
       <form class="mt-4" id="syllabusForm">
-        <div class="p-4 rounded border border-primary bg-light">
-          <legend>Termine</legend>
+        <div class="card border border-primary">
+          <div class="card-header"><legend class="mb-0">Termine</legend></div>
+          <div class="card-body">
           <div class="form-group row">
-            <label for="term" class="col-sm-2 col-form-label">Semester</label>
-            <div class="col-sm-10">
+            <label for="term" class="col-sm-3 col-form-label">Semester:</label>
+            <div class="col-sm-9">
               <select name="term" id="term" class="form-control">
                 <option selected value="Wintersemester 2019/20">Wintersemester 2019/20</option>
               </select>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Wochentage</label><br/>
+            <label class="col-sm-3 col-form-label">Wochentage:</label><br/>
             <div class="col-sm-3">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="weekdays[]" id="monday" value=1>
@@ -50,32 +53,63 @@
                 <label class="form-check-label" for="friday">Freitag</label>
               </div>
             </div>
-            <small class="col-sm-7 text-muted">
+            <small class="col-sm-6 text-muted">
               Mit diesen Angaben werden die Veranstaltungstermine automatisch generiert und in den Syllabus eingefügt. Zugrunde liegen die <a href="https://www.uni-frankfurt.de/58757965/Kommende_Semester">Semestertermine der Goethe Universität Frankfurt</a> sowie <a href="https://innen.hessen.de/buerger-staat/gesetzliche-feiertage"> die gesetzlichen Feiertage in Hessen.</a>
             </small>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-        <legend class="pt-4">Angaben zur Veranstaltung</legend>
-        <div class="form-group">
-          <input type="text" name="title" class="form-control" id="title" placeholder="Titel">
-        </div>
-        <div class="form-group">
-          <input type="text" name="module" class="form-control" id="modul" placeholder="Modul">
-        </div>
-        <legend class="mt-4">Angaben zur Dozent*in</legend>
-        <div class="row form-group">
-          <div class="col">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+        <div class="card mt-4">
+          <div class="card-header area-toggle" id="courseHeader" aria-controls="courseDetails" aria-expanded="false">
+            <legend class="mb-0">
+              <i class="far fa-plus-square mr-2" id="expandCourse"></i>
+              Angaben zur Veranstaltung
+            </legend>
           </div>
-          <div class="col">
-            <input type="text" name="email" class="form-control" id="email" placeholder="E-Mail">
+          <div id="courseDetails" class="collapse card-body" aria-labelledby="courseHeader"> 
+            <div class="form-group">
+              <input type="text" name="title" class="form-control" id="title" placeholder="Titel">
+            </div>
+            <div class="form-group">
+              <input type="text" name="module" class="form-control" id="modul" placeholder="Modul">
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="text" name="room" class="form-control" id="room" placeholder="Raum">
+              </div>
+              <div class="col">
+                <input type="text" name="time" class="form-control" id="time" placeholder="Uhrzeit">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <input type="text" name="website" class="form-control" id="website" placeholder="Webseite">
+        <div class="card mt-4">
+          <div class="card-header area-toggle" id="teacherHeader">
+            <legend class="mb-0" aria-expanded="false" aria-controls="teacherDetails">
+              <i class="far fa-plus-square mr-2" id="expandCourse"></i>
+              Angaben zur Dozent*in
+            </legend>
+          </div>
+          <div id="teacherDetails" class="collapse card-body" aria-labelledby="teacherHeader"> 
+            <div class="row form-group">
+              <div class="col">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+              </div>
+              <div class="col">
+                <input type="text" name="email" class="form-control" id="email" placeholder="E-Mail">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" name="website" class="form-control" id="website" placeholder="Webseite">
+            </div>
+          </div>
         </div>
-        <input type="submit" value="Syllabus generieren" class="btn btn-primary">
+        <div class="form-group mt-4">
+          <input type="submit" value="Syllabus generieren" class="btn btn-primary">
+      <!--  <input type="button" value="Angaben speichern" class="btn border-primary">
+        <input type="button" value="Gespeicherte Angaben löschen" class="btn border-primary">
+      -->
+        </div>
       </form>
     </div>
   </body>
@@ -91,49 +125,21 @@
   <![endif]-->
   <script src="js/jquery.serializejson.js"></script>
   <script src="js/termDates.js"></script>
+  <script src="js/generate.js"></script>
   <script>
-    function loadFile(url,callback){
-        PizZipUtils.getBinaryContent(url,callback);
-    }
-    function generate(syllabusTemplate, syllabusData) {
-        event.preventDefault();
-        loadFile(syllabusTemplate, function(error,content){
-            if (error) { throw error };
-            var zip = new PizZip(content);
-            var doc=new window.docxtemplater().loadZip(zip)
-            doc.setData(syllabusData);
-            try {
-                doc.render()
-            }
-            catch (error) {
-                var e = {
-                    message: error.message,
-                    name: error.name,
-                    stack: error.stack,
-                    properties: error.properties,
-                }
-                console.log(JSON.stringify({error: e}));
-                throw error;
-            }
-            var out=doc.getZip().generate({
-                type: "blob",
-                mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            })
-            var outFilename = "Syllabus";
-            [syllabusData.title, syllabusData.term].forEach(s =>{
-              if (s != "") outFilename += (" " + s) ;
-            });
-            outFilename += ".docx"
-            saveAs(out, outFilename)
-        })
-    }
-    $( "#syllabusForm").submit(function(event) {
+    $("#syllabusForm").on( "submit", event => {
       event.preventDefault();
-      var syllabusData = $(this).serializeJSON();
-      console.log(syllabusData);
-      syllabusData.days = getDaysForTerm(syllabusData.term, syllabusData.weekdays);
-      syllabusData.hasModule = syllabusData.module != "";
-      generate("syllabus_template.docx", syllabusData);
+      var sd = $("#syllabusForm").serializeJSON();
+      sd.days = getDaysForTerm(sd.term, sd.weekdays);
+      sd.hasModule = sd.module != "";
+      sd.hasRoom = sd.room != "";
+      sd.hasTime = sd.time != "";
+      sd.hasInfo = sd.time || sd.room;
+      generate("syllabus_template.docx", sd);
+    });
+    $(".area-toggle").click( function() {
+      $(this).siblings(".collapse").collapse("toggle");
+      $(this).find("i").toggleClass("fa-plus-square").toggleClass("fa-minus-square");
     });
   </script>
 </html>
