@@ -50,10 +50,18 @@ function setDepartmentDefaults() {
 $("body").ready( function() {
   $.getJSON("data/sections.json", populateSections);
   $.getJSON("data/departments.json", populateDepartments);
+  var savedData = Cookies.getJSON();
+  console.log(savedData);
 });
 
 $("#presetSelect").on("change", setDepartmentDefaults);
 $("input[name='departmentType']").on("change", setDepartmentDefaults);
+$("#saveData").click( function() {
+  console.log("saving");
+  $(this).toggleClass("d-none");
+  $("#updateData").toggleClass("d-none");
+  $("#clearData").toggleClass("d-none");
+});
 
 $("#syllabusForm").on( "submit", event => {
   event.preventDefault();
