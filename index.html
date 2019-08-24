@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="de">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Syllabus-Generator</title>
-    <meta charset="UTF-8">
     <link href="fontawesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -15,11 +16,11 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="mt-5">Syllabus-Generator</h1>
-      <p class="mt-4">Die hier eingegebenen Daten werden nur zur Generierung des Syllabus verwendet. Sie werden weder serverseitig gespeichert noch an Dritte weitergegeben.</p>
+      <h1 class="mt-3">Syllabus-Generator</h1>
+      <p class="mt-3">Die hier eingegebenen Daten werden nur zur Generierung des Syllabus verwendet. Sie werden weder serverseitig gespeichert noch an Dritte weitergegeben.</p>
       <p>Alle Angaben sind optional.</p>
-      <form class="mt-4" id="syllabusForm">
-        <div class="card border border-primary mb-4">
+      <form class="mt-3" id="syllabusForm">
+        <div class="card border border-primary mb-3">
           <div class="card-header"><legend class="mb-0">Termine</legend></div>
           <div class="card-body">
             <div class="form-group row">
@@ -54,32 +55,22 @@
                   <label class="form-check-label" for="friday">Freitag</label>
                 </div>
               </div>
-              <small class="col-sm-6 text-muted">
+              <small class="col-sm-6 form-tex text-muted">
                 Mit diesen Angaben werden die Veranstaltungstermine automatisch generiert und in den Syllabus eingefügt. Zugrunde liegen die <a href="https://www.uni-frankfurt.de/58757965/Kommende_Semester">Semestertermine der Goethe Universität Frankfurt</a> sowie <a href="https://innen.hessen.de/buerger-staat/gesetzliche-feiertage"> die gesetzlichen Feiertage in Hessen.</a>
               </small>
             </div>
           </div>
         </div>
-            <div class="form-group row">
-              <div class="col-sm-1">
-                <input type="radio" name="departmentType" value="custom" checked>
-              </div>
-              <div class="col-sm-11">
-                <textarea class="form-control" name="customAffiliation" placeholder="Institut
+        <div class="form-group">
+          <select class="form-control" id="presetSelect" name="presetDepartment">
+            <!-- formControl.js populates this from departments.json //-->
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control collapse" id="customDepartment" name="customDepartment" placeholder="Institut
 Fachbereich"></textarea>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-1">
-                <input type="radio" id="presetRadio" name="departmentType" value="preset">
-              </div>
-              <div class="col-sm-11">
-                <select class="form-control" id="presetSelect" name="presetAffiliation">
-                  <!-- formControl.js populates this from departments.json //-->
-                </select>
-              </div>
-            </div>
-        <div class="card mt-4">
+        </div>
+        <div class="card mt-3 mb-1">
           <div class="card-header area-toggle" id="courseHeader" aria-controls="courseDetails" aria-expanded="false">
             <i class="far fa-plus-square mr-2"></i>
             Angaben zur Veranstaltung
@@ -101,7 +92,7 @@ Fachbereich"></textarea>
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card mb-1">
           <div class="card-header area-toggle" id="teacherHeader" aria-expanded="false" aria-controls="teacherDetails">
             <i class="far fa-plus-square mr-2"></i>
             Angaben zur Dozent*in
@@ -120,7 +111,7 @@ Fachbereich"></textarea>
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card mb-1">
           <div class="card-header area-toggle" id="advancedHeader" aria-expanded="false" aria-controls="advancedDetails">
             <i class="far fa-plus-square mr-2"></i>
             Erweiterte Einstellungen
@@ -134,10 +125,10 @@ Fachbereich"></textarea>
             </div>
           </div>
         </div>
-        <div class="form-group mt-4">
-          <input type="button" id="saveData" value="Angaben speichern (setzt Cookie)" class="btn btn-sm">
-          <input type="button" id="updateData" value="Angaben speichern" class="d-none btn btn-sm">
-          <input type="button" id="clearData" value="Zurücksetzen (löscht Cookie)" class="d-none btn btn-sm">
+        <div class="form-group mt-3 mb-4">
+          <input type="button" id="saveData" value="Angaben speichern (setzt Cookie)" class="btn btn-sm mb-1">
+          <input type="button" id="updateData" value="Angaben speichern" class="d-none btn btn-sm mb-1">
+          <input type="button" id="clearData" value="Zurücksetzen (löscht Cookie)" class="d-none btn btn-sm mb-1">
           <input type="submit" value="Syllabus generieren" class="btn btn-primary btn-lg float-right">
           </div>
         </div>

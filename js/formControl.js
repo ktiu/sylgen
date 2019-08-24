@@ -2,21 +2,19 @@ function populateSections(sections) {
   sections.forEach( s => {
     $("#chooseSections").append(
       $('<div class="form-group">').append(
-        $('<div class="row">').append(
-          $('<div class="col-sm-1">').append(
-            $('<input type="checkbox" class="form-control form-check-input" name="' + s.flag + '" id="' + s.flag + '"' + (s.default ? " checked" : "") + '>')
-          )
+        $('<div class="form-check">').append(
+          $('<input type="checkbox" class="form-check-input" name="' + s.flag + '" id="' + s.flag + '"' + (s.default ? " checked" : "") + '>')
         ).append(
-          $('<div class="col-sm-11">').append(
-            $('<label class="form-check-label" for="' + s.flag + '">').text(s.title)
-          ).append(
-            $('<textarea rows="1" class="form-control" name="' + s.id + '" id="' + s.id + '">')
-          )
+          $('<label class="form-check-label" for="' + s.flag + '">').text(s.title)
         )
+      ).append(
+        $('<textarea rows="1" class="form-control" name="' + s.id + '" id="' + s.id + '">')
       )
     )
   });
-  $("#session").text("Lesetext:\n\nWeiterführende Literatur:").attr("rows", "3");
+  $("#session").text("Lesetext:\n\nWeiterführende Literatur:").attr("rows", "3").after(
+    $('<small id="sessionHelp" class="form-text text-muted">').text("Wird als Platzhalter für jeden einzelnen Sitzungstermin eingefügt.")
+  );
 }
 
 var departments;
@@ -28,6 +26,10 @@ function populateDepartments(depts) {
     $("#presetSelect").append(
       $('<option>').text(depts[i].display.replace(/\n/g, ", ")).val(i));
   }
+  $("#presetSelect").append(
+    $('<option>').text("Benutzerdefiniert...").val("custom")
+  );
+  setDepartmentDefaults();
 }
 
 function setDepartmentDefaults() {
@@ -36,14 +38,17 @@ function setDepartmentDefaults() {
       $("#" + dk).val("");
     }
   }
-  if($("input[name='departmentType']:checked").val() == "preset") {
+  var activeSelection = $("#presetSelect").children("option:selected").val();
+  if(activeSelection == "custom") {
+    $("#customDepartment").collapse("show");
+    defaults = {};
+  } else {
+    $("#customDepartment").collapse("hide");
     var activeDepartment = departments[($("#presetSelect").children("option:selected").val())];
     defaults=activeDepartment.defaults;
     for (var dk in activeDepartment.defaults) {
-     if($("#" + dk).val() == "")  $("#" + dk).val(activeDepartment.defaults[dk]);
+      if($("#" + dk).val() == "")  $("#" + dk).val(activeDepartment.defaults[dk]);
     }
-  } else {
-    defaults = {};
   }
 }
 
@@ -55,7 +60,6 @@ $("body").ready( function() {
 });
 
 $("#presetSelect").on("change", setDepartmentDefaults);
-$("input[name='departmentType']").on("change", setDepartmentDefaults);
 $("#saveData").click( function() {
   console.log("saving");
   $(this).toggleClass("d-none");
@@ -71,7 +75,7 @@ $("#syllabusForm").on( "submit", event => {
   sd.hasRoom = sd.room != "";
   sd.hasTime = sd.time != "";
   sd.hasInfo = sd.time || sd.room;
-  sd.department = sd.affiliationType == "preset" ? sd.presetAffiliation : sd.customAffiliation;
+  sd.department = sd.presetDepartment == "custom" ? sd.customDepartment : departments[sd.presetDepartment].display;
   sd.hasDepartment = sd.department !="";
   generate("syllabus_template.docx", sd);
 });
