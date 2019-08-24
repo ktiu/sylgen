@@ -17,6 +17,17 @@ function populateSections(sections) {
   );
 }
 
+var termData;
+
+function populateTerms(terms) {
+  termData=terms;
+  terms.forEach( t => {
+    $("#termSelect").append(
+      $('<option>').text(t.name)
+    );
+  });
+}
+    
 var departments;
 var defaults = {};
 
@@ -55,6 +66,7 @@ function setDepartmentDefaults() {
 $("body").ready( function() {
   $.getJSON("data/sections.json", populateSections);
   $.getJSON("data/departments.json", populateDepartments);
+  $.getJSON("data/terms.json", populateTerms);
   var savedData = Cookies.getJSON();
   console.log(savedData);
 });
@@ -62,9 +74,18 @@ $("body").ready( function() {
 $("#presetSelect").on("change", setDepartmentDefaults);
 $("#saveData").click( function() {
   console.log("saving");
-  $(this).toggleClass("d-none");
-  $("#updateData").toggleClass("d-none");
-  $("#clearData").toggleClass("d-none");
+  $(this).addClass("d-none");
+  $("#updateData").removeClass("d-none");
+  $("#clearData").removeClass("d-none");
+});
+$("#updateData").click( function() {
+  console.log("updating");
+});
+$("#clearData").click( function() {
+  console.log("clearing");
+  $(this).addClass("d-none");
+  $("#updateData").addClass("d-none");
+  $("#saveData").removeClass("d-none");
 });
 
 $("#syllabusForm").on( "submit", event => {

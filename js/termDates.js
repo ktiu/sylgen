@@ -1,8 +1,3 @@
-var request = new XMLHttpRequest();
-request.open("GET", "data/terms.json", false);
-request.send(null)
-const terms = JSON.parse(request.responseText);
-
 function buildUTCDate(string) {
   return new Date(string + 'T00:00:00Z');
 } 
@@ -24,7 +19,7 @@ function daysInRange(startDateString, endDateString) {
 function getDaysForTerm(termName, weekdays) {
   if(!weekdays) return [];
   var dayInts = weekdays.map(parseInt);
-  term = terms.filter(t => t.name === termName)[0];
+  term = termData.filter(t => t.name === termName)[0];
   var days = daysInRange(term.start, term.end);
   var offDays = term.offRanges.map(offRange => daysInRange(offRange.start, offRange.end))
   offDays = offDays.flat().concat(term.offDays.map(buildUTCDate));
