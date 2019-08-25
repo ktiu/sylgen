@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="term" class="col-sm-3 col-form-label">Semester</label>
               <div class="col-sm-9">
-                <select name="term" id="termSelect" class="form-control">
+                <select name="term" id="term" class="form-control">
                   <!-- populated by formControl.js //-->
                 </select>
               </div>
@@ -35,23 +35,23 @@
               <label class="col-sm-3 col-form-label">Wochentage</label><br/>
               <div class="col-sm-3">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="monday" value=1>
+                  <input class="form-check-input weekdays" type="checkbox" name="weekdays[]" id="monday" value=1>
                   <label class="form-check-label" for="monday">Montag</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="weekdays[]"  id="tuesday" value=2>
+                  <input class="form-check-input weekdays" type="checkbox" name="weekdays[]"  id="tuesday" value=2>
                   <label class="form-check-label" for="tuesday">Dienstag</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="wendnesday" value=3>
+                  <input class="form-check-input weekdays" type="checkbox" name="weekdays[]" id="wendnesday" value=3>
                   <label class="form-check-label" for="wendnesday">Mittwoch</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="thursday" value=4>
+                  <input class="form-check-input weekdays" type="checkbox" name="weekdays[]" id="thursday" value=4>
                   <label class="form-check-label" for="thursday">Donnerstag</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="weekdays[]" id="friday" value=5>
+                  <input class="form-check-input weekdays" type="checkbox" name="weekdays[]" id="friday" value=5>
                   <label class="form-check-label" for="friday">Freitag</label>
                 </div>
               </div>
@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="form-group">
-          <select class="form-control" id="presetSelect" name="presetDepartment">
+          <select class="form-control" id="presetDepartment" name="presetDepartment">
             <!-- formControl.js populates this from departments.json //-->
           </select>
         </div>
@@ -80,7 +80,7 @@ Fachbereich"></textarea>
               <input type="text" name="title" class="form-control" id="title" placeholder="Titel">
             </div>
             <div class="form-group">
-              <input type="text" name="module" class="form-control" id="modul" placeholder="Modul">
+              <input type="text" name="module" class="form-control" id="module" placeholder="Modul">
             </div>
             <div class="row">
               <div class="col">
@@ -126,8 +126,8 @@ Fachbereich"></textarea>
           </div>
         </div>
         <div class="form-group mt-3 mb-4">
-          <input type="button" id="saveData" value="Angaben speichern (setzt Cookie)" class="btn btn-default btn-sm mb-1">
-          <input type="button" id="updateData" value="Angaben speichern" class="d-none btn btn-default btn-sm mb-1">
+          <input type="button" id="saveData" value="Angaben merken (setzt Cookie)" class="btn btn-default btn-sm mb-1">
+          <input type="button" id="updateData" value="Angaben merken" class="d-none btn btn-default btn-sm mb-1">
           <input type="button" id="clearData" value="Zurücksetzen (löscht Cookie)" class="d-none btn btn-default btn-sm mb-1">
           <input type="submit" value="Syllabus generieren" class="btn btn-primary btn-lg float-right">
           </div>
@@ -146,7 +146,6 @@ Fachbereich"></textarea>
       <script type="text/javascript" src="https://raw.githubusercontent.com/open-xml-templating/pizzip/v3.0.4/dist/pizzip-utils-ie.js"></script>
   <![endif]-->
   <script src="js/jquery.serializejson.js"></script>
-  <script src="js/termDates.js"></script>
   <script src="js/generate.js"></script>
   <script src="js/formControl.js"></script>
 </html>

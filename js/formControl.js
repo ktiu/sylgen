@@ -1,18 +1,21 @@
+var sectionData;
+
 function populateSections(sections) {
+  sectionData = sections;
   sections.forEach( s => {
     $("#chooseSections").append(
       $('<div class="form-group">').append(
         $('<div class="form-check">').append(
-          $('<input type="checkbox" class="form-check-input" name="' + s.flag + '" id="' + s.flag + '"' + (s.default ? " checked" : "") + '>')
+          $('<input type="checkbox" class="form-check-input show-sections" name="' + s.flag + '" value="' + s.flag + '" id="' + s.flag + '"' + (s.default ? " checked" : "") + '>')
         ).append(
           $('<label class="form-check-label" for="' + s.flag + '">').text(s.title)
         )
       ).append(
-        $('<textarea rows="1" class="form-control" name="' + s.id + '" id="' + s.id + '">')
+        $('<textarea rows="2" class="form-control" name="' + s.id + '" id="' + s.id + '">')
       )
     )
   });
-  $("#session").text("Lesetext:\n\nWeiterführende Literatur:").attr("rows", "3").after(
+  $("#session").text("Lesetext:\nWeiterführende Literatur:").attr("rows", "2").after(
     $('<small id="sessionHelp" class="form-text text-muted">').text("Wird als Platzhalter für jeden einzelnen Sitzungstermin eingefügt.")
   );
 }
@@ -22,7 +25,7 @@ var termData;
 function populateTerms(terms) {
   termData=terms;
   terms.forEach( t => {
-    $("#termSelect").append(
+    $("#term").append(
       $('<option>').text(t.name)
     );
   });
@@ -34,10 +37,10 @@ var defaults = {};
 function populateDepartments(depts) {
   departments = depts;
   for (var i in depts) {
-    $("#presetSelect").append(
+    $("#presetDepartment").append(
       $('<option>').text(depts[i].display.replace(/\n/g, ", ")).val(i));
   }
-  $("#presetSelect").append(
+  $("#presetDepartment").append(
     $('<option>').text("Benutzerdefiniert...").val("custom")
   );
   setDepartmentDefaults();
@@ -49,13 +52,13 @@ function setDepartmentDefaults() {
       $("#" + dk).val("");
     }
   }
-  var activeSelection = $("#presetSelect").children("option:selected").val();
+  var activeSelection = $("#presetDepartment").children("option:selected").val();
   if(activeSelection == "custom") {
     $("#customDepartment").collapse("show");
     defaults = {};
   } else {
     $("#customDepartment").collapse("hide");
-    var activeDepartment = departments[($("#presetSelect").children("option:selected").val())];
+    var activeDepartment = departments[($("#presetDepartment").children("option:selected").val())];
     defaults=activeDepartment.defaults;
     for (var dk in activeDepartment.defaults) {
       if($("#" + dk).val() == "")  $("#" + dk).val(activeDepartment.defaults[dk]);
@@ -64,41 +67,49 @@ function setDepartmentDefaults() {
 }
 
 $("body").ready( function() {
-  $.getJSON("data/sections.json", populateSections);
-  $.getJSON("data/departments.json", populateDepartments);
-  $.getJSON("data/terms.json", populateTerms);
-  var savedData = Cookies.getJSON();
-  console.log(savedData);
+  var sectionPromise = $.getJSON("data/sections.json", populateSections);
+  var departmentPromise = $.getJSON("data/departments.json", populateDepartments);
+  var termPromise = $.getJSON("data/terms.json", populateTerms);
+  var savedData = Cookies.getJSON('formData');
+  if (savedData) {
+    Promise.all([sectionPromise, departmentPromise, termPromise]).then(function(){
+      for (fk in savedData) {
+        $("#" + fk ).val(savedData[fk]);
+      }
+      $("input.weekdays").val(savedData.weekdays);
+      var showSections = sectionData.filter(s => savedData[s.flag] === s.flag).map(s => s.flag);
+      $("input.show-sections").val(showSections);
+      if ($("#presetDepartment").val() == "custom") {
+        $("#customDepartment").addClass("show");
+      }
+    });
+    $("#saveData").addClass("d-none");
+    $("#updateData").removeClass("d-none");
+    $("#clearData").removeClass("d-none");
+  }
 });
 
-$("#presetSelect").on("change", setDepartmentDefaults);
+$("#presetDepartment").on("change", setDepartmentDefaults);
+
 $("#saveData").click( function() {
-  console.log("saving");
+  var formData = $("#syllabusForm").serializeJSON();
+  Cookies.set('formData', formData, { expires: (365 * 10) });
   $(this).addClass("d-none");
   $("#updateData").removeClass("d-none");
   $("#clearData").removeClass("d-none");
 });
+
 $("#updateData").click( function() {
-  console.log("updating");
+  var formData = $("#syllabusForm").serializeJSON();
+  Cookies.set('formData', formData);
 });
+
 $("#clearData").click( function() {
-  console.log("clearing");
+  Cookies.remove('formData');
   $(this).addClass("d-none");
   $("#updateData").addClass("d-none");
   $("#saveData").removeClass("d-none");
-});
-
-$("#syllabusForm").on( "submit", event => {
-  event.preventDefault();
-  var sd = $("#syllabusForm").serializeJSON();
-  sd.days = getDaysForTerm(sd.term, sd.weekdays);
-  sd.hasModule = sd.module != "";
-  sd.hasRoom = sd.room != "";
-  sd.hasTime = sd.time != "";
-  sd.hasInfo = sd.time || sd.room;
-  sd.department = sd.presetDepartment == "custom" ? sd.customDepartment : departments[sd.presetDepartment].display;
-  sd.hasDepartment = sd.department !="";
-  generate("syllabus_template.docx", sd);
+  location.reload(true);
 });
 
 $(".area-toggle").click( function() {
