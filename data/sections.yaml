@@ -1,0 +1,37 @@
+- title: Inhalte
+  id: contents
+  defaultInclude: true
+
+- title: Online-Materialien
+  id: link
+  defaultInclude: false
+
+- title: Lernziele
+  id: goals
+  defaultInclude: true
+  defaultText: Studierende können...
+  
+- title: Teilnahme- und Leistungsanforderungen
+  id: requirements
+  defaultInclude: true
+
+- title: Abgabefristen
+  id: deadlines
+  defaultInclude: true
+
+- title: Ressourcen für wissenschaftliches Arbeiten
+  id: resources
+  defaultInclude: true
+
+- title: Anwesenheitsregelung
+  id: attendance
+  defaultInclude: false
+
+- title: Sitzungen
+  id: session
+  flag: showSessions
+  defaultInclude: true
+  defaultText: |
+    Lexetext:
+    Weiterführende Literatur
+  helpText: Wird für jeden Sitzungstermin eingefügt.

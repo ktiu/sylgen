@@ -1,0 +1,14 @@
+- name: Wintersemester 2019/20
+  start: 2019-10-14
+  end: 2020-02-14
+  offRanges:
+  - start: 2019-12-21
+    end: 2020-01-10
+- name: Sommersemester 2020
+  start: 2020-04-14
+  end: 2020-07-17
+  offDays:
+  - 2020-05-01
+  - 2020-05-21
+  - 2020-06-01
+  - 2020-06-11

@@ -1,118 +1,147 @@
-var sectionData;
-
-function populateSections(sections) {
-  sectionData = sections;
-  sections.forEach( s => {
-    $("#chooseSections").append(
-      $('<div class="form-group">').append(
-        $('<div class="form-check">').append(
-          $('<input type="checkbox" class="form-check-input show-sections" name="' + s.flag + '" value="' + s.flag + '" id="' + s.flag + '"' + (s.default ? " checked" : "") + '>')
-        ).append(
-          $('<label class="form-check-label" for="' + s.flag + '">').text(s.title)
-        )
-      ).append(
-        $('<textarea rows="2" class="form-control" name="' + s.id + '" id="' + s.id + '">')
-      )
-    )
-  });
-  $("#session").text("Lesetext:\nWeiterführende Literatur:").attr("rows", "2").after(
-    $('<small id="sessionHelp" class="form-text text-muted">').text("Wird als Platzhalter für jeden einzelnen Sitzungstermin eingefügt.")
-  );
-}
-
-var termData;
-
-function populateTerms(terms) {
-  termData=terms;
-  terms.forEach( t => {
-    $("#term").append(
-      $('<option>').text(t.name)
-    );
-  });
-}
-    
 var departments;
+var sections;
+var terms;
 var defaults = {};
+var unis;
 
-function populateDepartments(depts) {
-  departments = depts;
-  for (var i in depts) {
-    $("#presetDepartment").append(
-      $('<option>').text(depts[i].display.replace(/\n/g, ", ")).val(i));
-  }
-  $("#presetDepartment").append(
-    $('<option>').text("Benutzerdefiniert...").val("custom")
-  );
-  setDepartmentDefaults();
+function changeTermMessage() {
+  var uni = unis.filter(u => u.folder === $("#uni").val())[0];
+  $("#termMessage").html(uni.termMessage);
 }
 
-function setDepartmentDefaults() {
+function populateDepartments() {
+  return $.get("unis/" + $("#uni").val() + "/departments.yaml", y => {
+    departments = jsyaml.load(y);
+    $("#presetDepartment").empty();
+    for (var i in departments) {
+      $("#presetDepartment").append(
+        $('<option>').text(departments[i].display.replace(/\n/g, ", ")).val(i)
+      );
+    }
+    $("#presetDepartment").append(
+      $('<option>').text("Benutzerdefiniert...").val("custom")
+    );
+    setDefaults();
+  }).fail( () => {
+    console.error("departments for " + $("#uni").val() + " not found");
+  });
+}
+
+function populateUnis() {
+  return $.get("data/unis.yaml", y => {
+    unis = jsyaml.load(y);
+    $("#uni").empty();
+    unis.forEach( u => {
+      $("#uni").append(
+        $('<option>').val(u.folder).text(u.name)
+      );
+    });
+  })
+    .then(populateDepartments)
+    .then(populateTerms)
+    .fail( () => {
+      console.error("unis.yaml not found");
+  });
+}
+
+function populateTerms() {
+  return $.get("unis/" + $("#uni").val() + "/terms.yaml", y => {
+    terms = jsyaml.load(y);
+    $("#term").empty();
+    for (var i in terms) {
+      $("#term").append($('<option>').text(terms[i].name).val(i));
+    }
+  }).fail( () => {
+    console.error("terms for " + $("#uni").val() + " not found");
+  });
+}
+
+function populateSections() {
+  return $.get("data/sections.yaml", y => {
+    sections = jsyaml.load(y);
+    $("#chooseSections").empty();
+    sections.forEach( s => {
+      $("#chooseSections").append(
+        $('<div class="form-group">').append(
+          $('<div class="form-check">').append(
+            $('<input type="checkbox" class="form-check-input show-sections" name="showSections[]" value="' + s.id + '" id="show-section-' + s.id + '"' + (s.defaultInclude ? " checked" : "") + '>')
+          ).append(
+            $('<label class="form-check-label" for="show-section-' + s.id + '">').text(s.title)
+          )
+        ).append(
+          $('<div id="section-details-'+s.id+'" class="collapse">').addClass(s.defaultInclude ? "show": "").append(
+            $('<textarea rows="2" class="form-control" name="' + s.id + '" id="' + s.id + '">').text(s.defaultText)
+          ).append(
+            $('<small class="form-text text-muted">').text(s.helpText)
+          )
+        )
+      )
+    });
+    $(".show-sections").change( function() {
+      $(this).parent().siblings(".collapse").collapse( this.checked? "show" : "hide");
+    });
+  });
+}
+
+function setDefaults() {
   for(var dk in defaults) {
     if ($("#" + dk).val() == defaults[dk]){
       $("#" + dk).val("");
     }
   }
   var activeSelection = $("#presetDepartment").children("option:selected").val();
+  // add uni defaults here eventually
   if(activeSelection == "custom") {
     $("#customDepartment").collapse("show");
     defaults = {};
   } else {
     $("#customDepartment").collapse("hide");
     var activeDepartment = departments[($("#presetDepartment").children("option:selected").val())];
-    defaults=activeDepartment.defaults;
-    for (var dk in activeDepartment.defaults) {
+    defaults = activeDepartment.defaults;
+    for (var dk in defaults) {
       if($("#" + dk).val() == "")  $("#" + dk).val(activeDepartment.defaults[dk]);
     }
   }
 }
 
 $("body").ready( function() {
-  var sectionPromise = $.getJSON("data/sections.json", populateSections);
-  var departmentPromise = $.getJSON("data/departments.json", populateDepartments);
-  var termPromise = $.getJSON("data/terms.json", populateTerms);
+  var uniPromise = populateUnis();
+  var sectionPromise = populateSections();
   var savedData = Cookies.getJSON('formData');
-  if (savedData) {
-    Promise.all([sectionPromise, departmentPromise, termPromise]).then(function(){
+  Promise.all([uniPromise, sectionPromise]).then( () => {
+    if (savedData) {
       for (fk in savedData) {
         $("#" + fk ).val(savedData[fk]);
       }
-      $("input.weekdays").val(savedData.weekdays);
-      var showSections = sectionData.filter(s => savedData[s.flag] === s.flag).map(s => s.flag);
-      $("input.show-sections").val(showSections);
+      if(savedData.weekdays){
+        $("input.weekdays").val(savedData.weekdays);
+      }
+      $("input.show-sections").val(savedData.showSections);
+      sections.forEach( s => {
+        if(savedData.showSections.includes(s.id)){
+          $("#section-details-"+s.id).addClass("show");
+        } else {
+          $("#section-details-"+s.id).removeClass("show");
+        }
+      });
       if ($("#presetDepartment").val() == "custom") {
         $("#customDepartment").addClass("show");
       }
-    });
-    $("#saveData").addClass("d-none");
-    $("#updateData").removeClass("d-none");
-    $("#clearData").removeClass("d-none");
-  }
+    }
+    changeTermMessage();
+  });
 });
 
-$("#presetDepartment").on("change", setDepartmentDefaults);
-
-$("#saveData").click( function() {
-  var formData = $("#syllabusForm").serializeJSON();
-  Cookies.set('formData', formData, { expires: (365 * 10) });
-  $(this).addClass("d-none");
-  $("#updateData").removeClass("d-none");
-  $("#clearData").removeClass("d-none");
+$("#uni").on("change", () => {
+  populateTerms();
+  populateDepartments();
+  changeTermMessage();
 });
 
-$("#updateData").click( function() {
-  var formData = $("#syllabusForm").serializeJSON();
-  Cookies.set('formData', formData);
-});
-
-$("#clearData").click( function() {
-  Cookies.remove('formData');
-  $(this).addClass("d-none");
-  $("#updateData").addClass("d-none");
-  $("#saveData").removeClass("d-none");
-  location.reload(true);
-});
+$("#presetDepartment").on("change", setDefaults);
 
 $(".area-toggle").click( function() {
   $(this).siblings(".collapse").collapse("toggle");
   $(this).find("i").toggleClass("fa-plus-square").toggleClass("fa-minus-square");
 });
+
