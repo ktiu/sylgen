@@ -10,9 +10,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="vendor/js/js.cookie.js"></script>
+    <!--  
     <style>
       @media (min-width: 768px) { .container{ max-width: 700px }
     </style>
+    //-->
   </head>
   <body>
     <div class="container">
@@ -22,13 +24,16 @@
           <p class="mb-0">Die hier eingegebenen Daten werden nur zur Generierung des Syllabus verwendet. Sie werden weder serverseitig gespeichert noch an Dritte weitergegeben.</p>
         </div>
       </div>
-      <form class="mt-3" id="syllabusForm">
+      <form class="mt-3 mb-3" id="syllabusForm">
         <div class="form-group row">
           <label for="uni" class="col-sm-3 col-form-label">Universität <span class="text-danger">*</span></label>
           <div class="col-sm-9">
             <select class="form-control" id="uni" name="uni">
               <!-- populated by formControl.js //-->
             </select>
+            <small class="form-text text-right text-muted">
+              <a href="https://github.com/ktiu/sylgen">Fehlende Universität ergänzen</a>
+            </small>
           </div>
         </div>
         <div class="form-group row">
@@ -37,8 +42,8 @@
             <select name="term" id="term" class="form-control">
               <!-- populated by formControl.js //-->
             </select>
-            <small class="form-text text-muted">
-              Fehlende Universitäten und Semestertermine können <a href="https://github.com/ktiu/sylgen">hier</a> ergänzt werden. 
+            <small class="form-text text-right text-muted">
+              <a href="https://github.com/ktiu/sylgen">Fehlende Semestertermine ergänzen</a>
             </small>
           </div>
         </div>
@@ -101,10 +106,10 @@ Fachbereich"></textarea>
               <input type="text" name="module" class="form-control" id="module" placeholder="Modul">
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col-md-6 form-group">
                 <input type="text" name="room" class="form-control" id="room" placeholder="Raum">
               </div>
-              <div class="col">
+              <div class="col-md-6 form-group">
                 <input type="text" name="time" class="form-control" id="time" placeholder="Uhrzeit">
               </div>
             </div>
@@ -113,11 +118,11 @@ Fachbereich"></textarea>
         <div class="form-group row">
           <label for="title"class="col-sm-3 col-form-label">Dozent*in</label>
           <div class="col-sm-9">
-            <div class="row form-group">
-              <div class="col">
+            <div class="row">
+              <div class="col-md-6 form-group">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Name">
               </div>
-              <div class="col">
+              <div class="col-md-6 form-group">
                 <input type="text" name="email" class="form-control" id="email" placeholder="E-Mail">
               </div>
             </div>
@@ -153,16 +158,16 @@ Fachbereich"></textarea>
         <p class="text-right form-text text-muted">
           <small><span class="text-danger">*)</span> Erforderliche Angaben</small>
         </p>
-        <div class="form-group d-flex justify-content-between mt-3 mb-4">
-          <div class="flex-fill pr-3">
-            <div class="form-check">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-check text-center">
               <input class="form-check-input" type="checkbox" id="remember" value="remember" name="remember" checked> 
               <label class="form-check-label" for="remember">Diese Angaben für den nächsten Besuch merken</label> 
             </div>
-            <div class="btn btn-link p-0 float-right" id="forget">Zurücksetzen</div>
+            <p class="btn-link text-center" id="forget">Zurücksetzen</p>
           </div>
-          <div class="flex-fill">
-            <input type="submit" value="Syllabus generieren" class="btn btn-primary btn-lg">
+          <div class="col-md-4">
+            <input type="submit" value="Syllabus generieren" class="form-control btn btn-primary btn-lg">
           </div>
         </div>
       </form>
