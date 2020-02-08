@@ -11,15 +11,16 @@ function changeTermMessage() {
 
 function populateDepartments() {
   return $.get("unis/" + $("#uni").val() + "/departments.yaml", y => {
-    departments = jsyaml.load(y);
+    departments = jsyaml.load(y).sort( (a, b) => { return a.name.localeCompare(b.name); });
+    unis = jsyaml.load(y).sort( (a, b) => { return a.name.localeCompare(b.name); });
     $("#presetDepartment").empty();
     for (var i in departments) {
       $("#presetDepartment").append(
-        $('<option>').text(departments[i].display.replace(/\n/g, ", ")).val(i)
+        $('<option>').text(departments[i].display.trim().replace(/\n/g, ", ")).val(i)
       );
     }
     $("#presetDepartment").append(
-      $('<option>').text("Benutzerdefiniert...").val("custom")
+      $('<option>').text("Andere...").val("custom")
     );
     setDefaults();
   }).fail( () => {
@@ -29,7 +30,7 @@ function populateDepartments() {
 
 function populateUnis() {
   return $.get("data/unis.yaml", y => {
-    unis = jsyaml.load(y);
+    unis = jsyaml.load(y).sort( (a, b) => { return a.name.localeCompare(b.name); });
     $("#uni").empty();
     unis.forEach( u => {
       $("#uni").append(
@@ -47,9 +48,24 @@ function populateUnis() {
 function populateTerms() {
   return $.get("unis/" + $("#uni").val() + "/terms.yaml", y => {
     terms = jsyaml.load(y);
+    var today = new Date();
+    terms = terms.sort( (a, b) => {
+      return (a.start - b.start)
+    }).map( t => {
+      if (t.start < today ) {
+        t.name = `(${t.name})`;
+      }
+      return t;
+    });
+    var termsInPast = true;
     $("#term").empty();
     for (var i in terms) {
-      $("#term").append($('<option>').text(terms[i].name).val(i));
+      var termOption = $('<option>').text(terms[i].name).val(i);
+      if (termsInPast && terms[i].start > new Date()) {
+        termOption = termOption.attr('selected', 'selected');
+        termsinPast = false;
+      }
+      $("#term").append(termOption);
     }
   }).fail( () => {
     console.error("terms for " + $("#uni").val() + " not found");
