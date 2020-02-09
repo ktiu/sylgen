@@ -1,6 +1,7 @@
 var daysClip;
 
 const updatePreview = () => {
+  console.log("Updating preview.");
   var weekdays = [];
   var daysString;
   $.each($("input[name='weekdays[]']:checked"), function(){
@@ -9,7 +10,7 @@ const updatePreview = () => {
   if(!weekdays.length) {
     daysString = "Kein Wochentag ausgesucht"; 
   } else {
-    var days = getDaysForTerm($("#term").val(), weekdays, "").map((d, i) => `[${i+1}] ${d.string}`)
+    var days = getDaysForTerm($("#term").val(), weekdays, "").map((d, i) => `${d.string}`)
     daysString = days.join("<br/>");
     daysClip = days.join("\n");
   }
@@ -17,7 +18,8 @@ const updatePreview = () => {
   $("#preview").tooltip({'title': daysString, 'html': true});
 };
 
-// next 2 functions straight from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+// next 2 functions straight from so
+// https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
 
 function fallbackCopyTextToClipboard(text) {
   var textArea = document.createElement("textarea");
@@ -26,7 +28,6 @@ function fallbackCopyTextToClipboard(text) {
   document.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
-
   try {
     var successful = document.execCommand('copy');
     var msg = successful ? 'successful' : 'unsuccessful';
@@ -34,9 +35,9 @@ function fallbackCopyTextToClipboard(text) {
   } catch (err) {
     console.error('Fallback: Oops, unable to copy', err);
   }
-
   document.body.removeChild(textArea);
 }
+
 function copyTextToClipboard(text) {
   if (!navigator.clipboard) {
     fallbackCopyTextToClipboard(text);

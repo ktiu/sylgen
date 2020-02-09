@@ -28,9 +28,9 @@ function getDaysForTerm(termIndex, weekdays, text) {
     return !offTime.includes(t);
   });
   days = days.filter(d => dayInts.includes(d.getUTCDay()));
-  return days.map(d => {
+  return days.map((d, i) => {
     return {
-      string: d.toLocaleString('de-DE', {
+      string: ( $("#numberSessions").is(":checked") ?  i+1 + ") " : "")  + d.toLocaleString('de-DE', {
         timeZone: 'UTC',
         weekday: 'long',
         year: 'numeric', 

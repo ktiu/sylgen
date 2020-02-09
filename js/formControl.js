@@ -89,6 +89,8 @@ function populateSections() {
             $('<textarea rows="2" class="form-control" name="' + s.id + '" id="' + s.id + '">').text(s.defaultText)
           ).append(
             $('<small class="form-text text-muted">').text(s.helpText)
+          ).append(
+            s.id == "session" ? "<div class='form-check'> <input class='form-check-input' type='checkbox' id='numberSessions' value='numberSessions' name='numberSessions' checked><label class='form-check-label' for='numberSessions'>Sitzungen nummerieren</label></div>" : ""
           )
         )
       )
@@ -96,6 +98,7 @@ function populateSections() {
     $(".show-sections").change( function() {
       $(this).parent().siblings(".collapse").collapse( this.checked? "show" : "hide");
     });
+    $("#numberSessions").on("change", updatePreview); 
   });
 }
 
@@ -143,9 +146,9 @@ $("body").ready( function() {
       if ($("#presetDepartment").val() == "custom") {
         $("#customDepartment").addClass("show");
       }
+      updatePreview();
     }
     changeTermMessage();
-    updatePreview();
   });
 });
 
