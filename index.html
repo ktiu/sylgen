@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="de">
   <head>
-    <meta charset="utf-8">
+      <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Syllabus-Generator</title>
     <link href="vendor/css/fontawesome.css" rel="stylesheet">
@@ -11,7 +11,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="vendor/js/js.cookie.js"></script>
     <style>
-      @media (min-width: 768px) { .container{ max-width: 700px }
+      @media (min-width: 768px) {
+        .container{ max-width: 700px }
+      }
+      .tooltip-inner {
+        white-space:nowrap;
+        max-width:none;
+      }
+      #preview { display:none }
+      @media only screen and (any-hover){
+        #preview { display:block }
+        #preview:hover span {display:none}
+        #preview:hover:before {content:"In die Zwischenablage kopieren"}
+      }
     </style>
   </head>
   <body>
@@ -77,6 +89,9 @@
               <p id="termMessage">
                 <!-- filled by formControl.js //-->
               </p>
+              <div id="preview" class="btn btn-sm btn-block btn-outline-info" data-toggle="tooltip" data-placement="top">
+                <span>Vorschau</span>
+              </div> 
             </small>
           </div>
         </div>
@@ -184,5 +199,6 @@ Fachbereich"></textarea>
   <script src="vendor/js/jquery.serializejson.js"></script>
   <script src="vendor/js/js-yaml.min.js"></script>
   <script src="js/generateDocx.js"></script>
+  <script src="js/preview.js"></script>
   <script src="js/formControl.js"></script>
 </html>

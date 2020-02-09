@@ -12,7 +12,6 @@ function changeTermMessage() {
 function populateDepartments() {
   return $.get("unis/" + $("#uni").val() + "/departments.yaml", y => {
     departments = jsyaml.load(y).sort( (a, b) => { return a.name.localeCompare(b.name); });
-    unis = jsyaml.load(y).sort( (a, b) => { return a.name.localeCompare(b.name); });
     $("#presetDepartment").empty();
     for (var i in departments) {
       $("#presetDepartment").append(
@@ -67,6 +66,7 @@ function populateTerms() {
       }
       $("#term").append(termOption);
     }
+    updatePreview();
   }).fail( () => {
     console.error("terms for " + $("#uni").val() + " not found");
   });
@@ -145,6 +145,7 @@ $("body").ready( function() {
       }
     }
     changeTermMessage();
+    updatePreview();
   });
 });
 
