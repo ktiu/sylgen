@@ -1,5 +1,7 @@
 # Syllabus generator
 
+Frontend: https://ktiu.github.io/sylgen
+
 ## Universität hinzufügen
 
 - Metadaten in `data/unis.yaml` hinzufügen
