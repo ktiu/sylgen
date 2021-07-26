@@ -62,7 +62,7 @@ function populateTerms() {
       var termOption = $('<option>').text(terms[i].name).val(i);
       if (termsInPast && terms[i].start > new Date()) {
         termOption = termOption.attr('selected', 'selected');
-        termsinPast = false;
+        termsInPast = false;
       }
       $("#term").append(termOption);
     }
