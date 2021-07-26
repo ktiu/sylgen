@@ -2,19 +2,41 @@
   start: 2019-10-14
   end: 2020-02-14
   offRanges:
-  - start: 2019-12-21
-    end: 2020-01-10
+    - start: 2019-12-21
+      end: 2020-01-10
 - name: Sommersemester 2020
   start: 2020-04-14
   end: 2020-07-17
   offDays:
-  - 2020-05-01
-  - 2020-05-21
-  - 2020-06-01
-  - 2020-06-11
+    - 2020-05-01
+    - 2020-05-21
+    - 2020-06-01
+    - 2020-06-11
 - name: Wintersemester 2020/21
   start: 2020-11-02
   end: 2021-02-21
   offRanges:
-  - start: 2020-12-19
-    end: 2021-01-08
+    - start: 2020-12-19
+      end: 2021-01-08
+- name: Sommersemester 2021
+  start: 2021-04-12
+  end: 2021-07-16
+  offDays:
+    - 2021-05-01
+    - 2021-05-13
+    - 2021-05-24
+    - 2021-06-03
+- name: Wintersemester 2021/22
+  start: 2021-10-18
+  end: 2022-02-18
+  offRanges:
+    - start: 2021-12-18
+      end: 2022-01-07
+- name: Sommersemester 2022
+  start: 2022-04-11
+  end: 2022-07-15
+  offDays:
+    - 2021-05-01 # Tag der Arbeit
+    - 2021-05-13 # Christi Himmelfahrt
+    - 2021-05-24 # Pfingstmontag
+    - 2021-06-03 # Fronleichnam
