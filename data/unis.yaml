@@ -4,7 +4,7 @@
   defaults:
     link: https://olat-ce.server.uni-frankfurt.de/
 - folder: bayreuth
-  name: Uni Bayreuth
-  termMessage: "Zugrunde liegen die Semestertermine der Uni Bayreuth sowie die gesetzlichen Feiertage in Bayern."
+  name: Universität Bayreuth
+  termMessage: "Zugrunde liegen die Semestertermine der Universität Bayreuth sowie die gesetzlichen Feiertage in Bayern."
   defaults:
     email: "@uni-bayreuth.de"
