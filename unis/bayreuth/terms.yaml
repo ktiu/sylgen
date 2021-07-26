@@ -18,3 +18,18 @@
   offRanges:
   - start: 2020-12-24
     end: 2021-01-06
+- name: Sommersemester 2021
+  start: 2021-04-12
+  end: 2021-07-16
+  offDays:
+  - 2021-05-01
+  - 2021-05-13
+  - 2021-05-24
+  - 2021-05-25
+  - 2021-06-03
+  - name: Wintersemester 2021/22
+  start: 2021-10-18
+  end: 2022-02-11
+  offRanges:
+  - start: 2021-12-24
+    end: 2022-01-07
