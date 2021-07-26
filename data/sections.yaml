@@ -10,7 +10,7 @@
   id: goals
   defaultInclude: true
   defaultText: Studierende können...
-  
+
 - title: Teilnahme- und Leistungsanforderungen
   id: requirements
   defaultInclude: true
@@ -32,6 +32,6 @@
   flag: showSessions
   defaultInclude: true
   defaultText: |
-    Lexetext:
+    Lesetext:
     Weiterführende Literatur:
   helpText: Wird für jeden Sitzungstermin eingefügt.

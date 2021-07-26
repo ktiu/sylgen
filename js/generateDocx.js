@@ -79,9 +79,6 @@ function generate(syllabusTemplate, syllabusData) {
   })
 }
 
-saveData = function() {
-}
-
 $("#forget").click( function() {
   Cookies.remove('formData');
   location.reload(true);
@@ -99,6 +96,8 @@ $("#syllabusForm").on( "submit", event => {
   sd.hasTime = sd.time != "";
   sd.hasWebsite = sd.website != "";
   sd.hasEmail = sd.email != "";
+  sd.hasHours = sd.hours != "";
+  sd.hasOffice = sd.office != "";
   sd.hasInfo = sd.time || sd.room;
   sd.title = sd.title ? sd.title : "[Titel]";
   sd.name = sd.name ? sd.name : "[Name]";
