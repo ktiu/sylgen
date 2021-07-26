@@ -98,7 +98,7 @@ function populateSections() {
     $(".show-sections").change( function() {
       $(this).parent().siblings(".collapse").collapse( this.checked? "show" : "hide");
     });
-    $("#numberSessions").on("change", updatePreview); 
+    $("#numberSessions").on("change", updatePreview);
   });
 }
 
@@ -108,18 +108,17 @@ function setDefaults() {
       $("#" + dk).val("");
     }
   }
-  var activeSelection = $("#presetDepartment").children("option:selected").val();
-  // add uni defaults here eventually
-  if(activeSelection == "custom") {
+  defaults = {};
+  defaults = unis.filter(u => u.folder === $("#uni").val())[0].defaults;
+  if($("#presetDepartment").children("option:selected").val() == "custom") {
     $("#customDepartment").collapse("show");
-    defaults = {};
   } else {
     $("#customDepartment").collapse("hide");
     var activeDepartment = departments[($("#presetDepartment").children("option:selected").val())];
-    defaults = activeDepartment.defaults;
-    for (var dk in defaults) {
-      if($("#" + dk).val() == "")  $("#" + dk).val(activeDepartment.defaults[dk]);
-    }
+    defaults = $.extend({}, defaults, activeDepartment.defaults);
+  }
+  for (var dk in defaults) {
+    if($("#" + dk).val() == "")  $("#" + dk).val(defaults[dk]);
   }
 }
 

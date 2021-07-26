@@ -1,5 +1,4 @@
 - display: Geographisches Institut
-    defaults:
-    email: "@uni-bayreuth.de"
+  defaults:
     resources: |
       Baade, J., Gertel, H. & Schlottmann, A. (2014): Wissenschaftlich arbeiten: Ein Leitfaden für Studierende der Geographie. 3. Auflage. Bern: Haupt.
