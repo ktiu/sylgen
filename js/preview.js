@@ -1,7 +1,6 @@
 var daysClip;
 
 const updatePreview = () => {
-  console.log("Updating preview.");
   var weekdays = [];
   var daysString;
   $.each($("input[name='weekdays[]']:checked"), function(){
@@ -18,7 +17,7 @@ const updatePreview = () => {
   $("#preview").tooltip({'title': daysString, 'html': true});
 };
 
-// next 2 functions straight from so
+// stole the next 2 functions straight from so
 // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
 
 function fallbackCopyTextToClipboard(text) {

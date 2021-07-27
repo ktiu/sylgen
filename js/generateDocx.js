@@ -33,11 +33,11 @@ function getDaysForTerm(termIndex, weekdays, text) {
       string: ( $("#numberSessions").is(":checked") ?  i+1 + ") " : "")  + d.toLocaleString('de-DE', {
         timeZone: 'UTC',
         weekday: 'long',
-        year: 'numeric', 
-        month: 'long', 
+        year: 'numeric',
+        month: 'long',
         day: 'numeric'
       }),
-      text: text 
+      text: text
     }
   });
 }
@@ -46,7 +46,7 @@ function loadFile(url,callback){
   PizZipUtils.getBinaryContent(url,callback);
 }
 
-function generate(syllabusTemplate, syllabusData) {
+function generateDocx(syllabusTemplate, syllabusData) {
   loadFile(syllabusTemplate, function(error, content){
       if (error) { throw error };
       var zip = new PizZip(content);
@@ -79,6 +79,68 @@ function generate(syllabusTemplate, syllabusData) {
   })
 }
 
+function generateMd(data) {
+  var lines = [
+    "---",
+    "author:",
+    ` - name: ${data.name}`,
+    `   email: ${data.email}`,
+    `title: ${data.title}`,
+    "subtitle: Syllabus",
+    `date: ${data.termName}`,
+    "---",
+    ""
+  ]
+  lines.push(
+    `${data.department.trim('\n').replace('\n', '  \n')}  `,
+    `${data.uni}`,
+    ""
+  );
+  if (data.hasWebsite) {
+    lines.push(`${data.website}`);
+  }
+  if (data.hasHours) {
+    lines.push(`Sprechstunde: ${data.hours}`);
+  }
+  if (data.hasOffice) {
+    lines.push(`${data.office}`);
+  }
+  if (data.hasModule) {
+    lines.push("", `${data.module}`);
+  }
+  data.sections.forEach((section) => {
+    lines.push(
+      "",
+      `# ${section.title}`,
+      "",
+      `${section.content}`
+    );
+  })
+  if (data.showSessions) {
+    lines.push(
+      `# ${data.sessionsTitle}`,
+      "",
+    );
+    if (data.hasInfo) {
+      lines.push(
+        "Alle Sitzungen finden " +
+        (data.hasRoom ? `in Raum ${data.room} ` : "") +
+        (data.hasTime ? `um ${data.time} ` : "") +
+        "statt.",
+        ""
+      );
+    }
+    data.sessionDays.forEach((day) => {
+      lines.push(
+        `## ${day.string}`,
+        "",
+        `${day.text.replace('\n', '  \n')}`
+      );
+    });
+  }
+  console.log(lines.join("\n"));
+}
+
 $("#forget").click( function() {
   Cookies.remove('formData');
   location.reload(true);
@@ -102,6 +164,7 @@ $("#syllabusForm").on( "submit", event => {
   sd.title = sd.title ? sd.title : "[Titel]";
   sd.name = sd.name ? sd.name : "[Name]";
   sd.department = sd.presetDepartment == "custom" ? sd.customDepartment : departments[sd.presetDepartment].display;
+  sd.uni = unis.filter(u => u.folder === sd.uni)[0].name;
   sd.hasDepartment = sd.department !="";
   sd.sections = [];
   if(sd.showSections.includes("session")){
@@ -117,5 +180,11 @@ $("#syllabusForm").on( "submit", event => {
       content: sd[s]
     });
   });
-  generate("unis/" + sd.uni + "/template.docx", sd);
+  switch (sd.format) {
+    case 'md':
+      generateMd(sd);
+      break;
+    default:
+      generateDocx("unis/" + sd.uni + "/template.docx", sd);
+  }
 });
