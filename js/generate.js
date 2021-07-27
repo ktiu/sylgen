@@ -71,7 +71,7 @@ function generateDocx(syllabusTemplate, syllabusData) {
           mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       })
       var outFilename = "Syllabus";
-      [syllabusData.title, syllabusData.term].forEach(s =>{
+      [syllabusData.title, syllabusData.termName].forEach(s => {
         if (s != "") outFilename += (" " + s) ;
       });
       outFilename += ".docx"
@@ -93,7 +93,7 @@ function generateMd(data) {
   ]
   lines.push(
     `${data.department.trim('\n').replace('\n', '  \n')}  `,
-    `${data.uni}`,
+    `${data.uniName}`,
     ""
   );
   if (data.hasWebsite) {
@@ -164,7 +164,7 @@ $("#syllabusForm").on( "submit", event => {
   sd.title = sd.title ? sd.title : "[Titel]";
   sd.name = sd.name ? sd.name : "[Name]";
   sd.department = sd.presetDepartment == "custom" ? sd.customDepartment : departments[sd.presetDepartment].display;
-  sd.uni = unis.filter(u => u.folder === sd.uni)[0].name;
+  sd.uniName = unis.filter(u => u.folder === sd.uni)[0].name;
   sd.hasDepartment = sd.department !="";
   sd.sections = [];
   if(sd.showSections.includes("session")){
