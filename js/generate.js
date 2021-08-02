@@ -70,12 +70,7 @@ function generateDocx(syllabusTemplate, syllabusData) {
           type: "blob",
           mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       })
-      var outFilename = "Syllabus";
-      [syllabusData.title, syllabusData.termName].forEach(s => {
-        if (s != "") outFilename += (" " + s) ;
-      });
-      outFilename += ".docx"
-      saveAs(out, outFilename)
+      saveAs(out, syllabusData.filename + '.docx')
   })
 }
 
@@ -105,15 +100,18 @@ function generateMd(data) {
   if (data.hasOffice) {
     lines.push(`${data.office}`);
   }
+  if (data.hasWebsite | data.hasHours | data.hasOffice) {
+    lines.push("");
+  }
   if (data.hasModule) {
-    lines.push("", `${data.module}`);
+    lines.push(`${data.module}`, "");
   }
   data.sections.forEach((section) => {
     lines.push(
-      "",
       `# ${section.title}`,
       "",
-      `${section.content}`
+      `${section.content.trim('\n')}`,
+      ""
     );
   })
   if (data.showSessions) {
@@ -134,10 +132,18 @@ function generateMd(data) {
       lines.push(
         `## ${day.string}`,
         "",
-        `${day.text.replace('\n', '  \n')}`
+        `${day.text.replace('\r\n', '  \n').trim('\n')}`,
+        ""
       );
     });
   }
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(lines.join("\n")));
+  element.setAttribute('download', data.filename + '.md');
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
   console.log(lines.join("\n"));
 }
 
@@ -145,7 +151,6 @@ $("#forget").click( function() {
   Cookies.remove('formData');
   location.reload(true);
 });
-
 
 $("#syllabusForm").on( "submit", event => {
   event.preventDefault();
@@ -179,6 +184,10 @@ $("#syllabusForm").on( "submit", event => {
       title: sections.find(e => e.id==s).title,
       content: sd[s]
     });
+  });
+  sd.filename = "Syllabus";
+  [sd.title, sd.termName].forEach(s => {
+    if (s != "") sd.filename += (" " + s) ;
   });
   switch (sd.format) {
     case 'md':

@@ -4,6 +4,7 @@
   defaults:
     link: https://olat-ce.server.uni-frankfurt.de/
     email: "@uni-frankfurt.de"
+
 - folder: bayreuth
   name: Universität Bayreuth
   termMessage: "Zugrunde liegen die <a href='https://www.uni-bayreuth.de/de/campusleben/terminkalender/termine_studienjahr/index.html'>Semestertermine der Universität Bayreuth</a> sowie die <a href='https://www.stmi.bayern.de/suv/bayern/feiertage/index.php'>gesetzlichen Feiertage in Bayern.</a>"

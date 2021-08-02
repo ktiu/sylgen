@@ -19,7 +19,7 @@ Alle können mithelfen, fehlende Daten zu ergänzen.
   - `template.docx`
   - `departments.yaml`
   - `terms.yaml`
-- Dabei am besten an einer vorhandenen Uni orientieren.
+- Dabei am besten den Ordner `unis/_template/` kopieren, umbenennen und anpassen.
 
 ## Institution hinzufügen
 
@@ -31,9 +31,9 @@ Alle können mithelfen, fehlende Daten zu ergänzen.
 
 - Geht immer nur für eine Uni
 - Im entsprechenden Uni-Ordner `terms.yaml` bearbeiten.
-- Das Format
+- Für das richtige Format an bestehenden Terminen orientieren.
 
 ## Anleitungen schreiben
 
-- Diese Anleitungen können auch gerne verbessert werden.
+- Diese Anleitungen sind dürftig und können gerne verbessert werden!
 - Dazu die Datei `README.md` bearbeiten.
