@@ -37,9 +37,9 @@
   end: 2022-07-15
   offDays:
     - 2021-05-01 # Tag der Arbeit
-    - 2021-05-13 # Christi Himmelfahrt
-    - 2021-05-24 # Pfingstmontag
-    - 2021-06-03 # Fronleichnam
+    - 2021-05-26 # Christi Himmelfahrt
+    - 2021-06-06 # Pfingstmontag
+    - 2021-06-16 # Fronleichnam
 - name: Wintersemester 2022/23
   start: 2022-10-17
   end: 2023-02-10
