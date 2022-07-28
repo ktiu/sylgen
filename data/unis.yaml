@@ -1,6 +1,6 @@
 - folder: goethe_frankfurt
   name: Goethe-Universität Frankfurt
-  termMessage: "Zugrunde liegen die <a href='https://www.uni-frankfurt.de/92642720/Semestertermine'>Semestertermine der Goethe Universität Frankfurt</a> sowie die <a href='https://innen.hessen.de/buerger-staat/gesetzliche-feiertage'>gesetzlichen Feiertage in Hessen.</a>"
+  termMessage: "Zugrunde liegen die <a href='https://www.uni-frankfurt.de/92642720/Semestertermine'>Semestertermine der Goethe Universität Frankfurt</a> sowie die <a href='https://innen.hessen.de/buerger-staat/feiertage'>gesetzlichen Feiertage in Hessen.</a>"
   defaults:
     link: https://olat-ce.server.uni-frankfurt.de/
     email: "@uni-frankfurt.de"
