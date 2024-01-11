@@ -54,3 +54,23 @@
     - 2023-05-18 # Christi Himmelfahrt
     - 2023-05-29 # Pfingstmontag
     - 2023-06-08 # Fronleichnam
+- name: Winteresemester 2023/24
+  start: 2023-10-16
+  end: 2024-02-09
+  offRanges:
+    - start: 2023-12-25
+      end: 2024-01-05
+- name: Sommersemster 2024
+  start: 2024-04-15
+  end: 2024-07-19
+  offDays:
+    - 2024-05-01 # Tag der Arbeit
+    - 2024-05-09 # Christi Himmelfahrt
+    - 2024-05-20 # Pfingstmontag
+    - 2024-05-30 # Fronleichnam
+- name: Winteresemester 2024/25
+  start: 2024-10-14
+  end: 2025-02-14
+  offRanges:
+    - start: 2023-12-21
+      end: 2024-01-12
