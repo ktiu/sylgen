@@ -74,3 +74,31 @@
   offRanges:
     - start: 2024-12-21
       end: 2025-01-12
+- name: Sommersemester 2025
+  start: 2025-04-22
+  end: 2025-07-25
+  offDays:
+    - 2024-05-01 # Tag der Arbeit
+    - 2024-05-29 # Christi Himmelfahrt
+    - 2024-06-09 # Pfingstmontag
+    - 2024-06-19 # Fronleichnam
+- name: Winteresemester 2025/26
+  start: 2024-10-13
+  end: 2025-02-13
+  offRanges:
+    - start: 2024-12-20
+      end: 2025-01-11
+- name: Sommersemester 2026
+  start: 2025-04-13
+  end: 2025-07-17
+  offDays:
+    - 2024-05-01 # Tag der Arbeit
+    - 2024-05-14 # Christi Himmelfahrt
+    - 2024-05-25 # Pfingstmontag
+    - 2024-06-04 # Fronleichnam
+- name: Winteresemester 2026/27
+  start: 2024-10-12
+  end: 2025-02-12
+  offRanges:
+    - start: 2024-12-19
+      end: 2025-01-10
